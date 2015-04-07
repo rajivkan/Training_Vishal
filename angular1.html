@@ -1,0 +1,88 @@
+<html ng-app="appName">
+	<head>
+		<script type="text/javascript" src="js/libs/angular.min.js"></script>
+		<script type="text/javascript" src="js/libs/jquery-1.11.2.min.js"></script>
+		<script type="text/javascript">
+
+			var appModule = angular.module("appName", []);
+			var arrayData=[];
+			appModule.controller("messageController", ["$scope", "$q", "service", function($scope, $q, service){
+
+				$scope.message = "Welcome to Angular Js";
+				$scope.names = ["Name 1", "Name 2", "Name 3", "Name 4"];
+
+				$scope.AddItem = function(){
+					$scope.names.push("Name " + ($scope.names.length+1));
+				}
+
+				$scope.RemoveItem = function(){
+					$scope.names.splice(0, 1);
+				}
+
+				service.retrieve().then(function(result){
+					
+					var arrayData = result.data;
+					//return result;
+				}, function(err){
+					alert("Unable to load data.")
+				}).then(function(res){
+					
+				})
+
+			}])
+
+			appModule.service("service", ["$http", "$q", function($http, $q){
+				this.retrieve = function(){
+					var req = {
+						url : "http://localhost/test/register.php",
+						method: "GET"
+					}
+
+					var d = $q.defer();
+					$http(req).success(function(result){
+						d.resolve(result);
+					})
+					.error(function(err){
+						d.reject(err);
+					})
+
+					return d.promise;
+				}
+			}]);
+
+			appModule.directive("login", function(){
+				return{
+					restrict: "C", // E A C M
+					templateUrl: "templates/login-form.html",
+					controller: "loginController"
+				}
+			})
+
+			appModule.controller("loginController", ["$scope", function($scope){
+				$scope.username="";
+				$scope.password="";
+				$scope.onLogin = function(){
+					alert($scope.username +"::"+$scope.password);
+				}
+			}])
+
+		</script>
+	</head>
+	<body>
+		<div ng-controller="messageController">
+			<h3 ng-bind="message"></h3>
+
+			<div ng-bind="message" class="abc"></div>
+
+			<span ng-repeat="nm in names">{{nm}} <br></span>
+			<button ng-click="AddItem()">Add Item</button>
+			<button ng-click="RemoveItem()">Remove Item</button>
+		</div>
+
+
+		<!-- <login></login> -->
+		<!-- <div login="asdas"></div> -->
+		<div class="login"></div>
+
+	</body>
+</html>

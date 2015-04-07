@@ -1,0 +1,92 @@
+<html>
+	<head>
+		<script type="text/javascript">
+			//alert("Welcome to Javascript");
+			/*if(confirm("Are you sure?")){
+				alert("TRUE");
+			}*/
+			// else{
+			// 	alert("FALSE");
+			// }
+			window.addEventListener("load", onLoad);
+			function onLoad(){
+				//var cityName=prompt("Enter you City: ");
+				//alert("Your city name is " + cityName);
+				var div = document.getElementById("div1");
+				//div.className = "message";
+				div.style.fontSize = "30px";
+				//document.getElementsByTagName("div")[0].innerHTML = cityName;
+
+				//document.getElementsByClassName("abc")[2].innerHTML = cityName;
+
+				//document.getElementsByName("divName")[1].innerHTML = cityName;
+
+				//var dt = new Date();
+				//document.getElementsByName("spanName")[0].innerHTML = dt.getMonth() + 1 +"/"+dt.getDate()+"/"+dt.getFullYear();
+
+				var p = document.createElement("p");
+				p.innerHTML = "Paragraph 1";
+				document.getElementsByTagName("body")[0].appendChild(p);
+
+				var btn = document.createElement("button");
+				btn.innerHTML = "Click Me";
+				btn.addEventListener("click", function(){
+					alert("Button clicked.");
+				})
+				document.getElementsByTagName("body")[0].appendChild(btn);
+			}
+
+			
+			function Parent(){
+				// var x = 10;
+				
+				// function abc(){
+				// 	return x;
+				// }
+
+				// function xyz(){
+				// 	return x*2;
+				// }
+
+				// return{
+				// 	abc: abc,
+				// 	xyz: xyz
+				// }
+				this.message = "My name is ";
+			}
+			var a = Parent();
+			//alert(a.xyz());
+			
+			function Child(name){
+				this.name = name;
+			}
+			Child.prototype = new Parent();
+
+			var child = new Child("Raj");
+
+			//alert(child.message+child.name);
+
+			window.addEventListener("CUSTOM_EVENT", function(evt){
+				console.log(evt.user);
+			});
+			
+			var evt = new CustomEvent("CUSTOM_EVENT");
+			evt.user = {user:"Raj"};
+			window.dispatchEvent(evt);
+			
+		</script>
+
+		<style type="text/css">
+
+			.message{
+				color: #ff0000;
+			}
+
+		</style>
+	</head>
+	<body>
+		<div id="div1" class="abc" name="divName"> Div 1</div>
+		<div id="div2"  class="abc" name="divName"> Div 2</div>
+		<span class="abc" name="spanName"></span>
+	</body>
+</html>
